@@ -5,9 +5,9 @@ function stringifyCompactConfig(configObject) {
 			if (typeof obj[key] === 'object') {
 				result += `${key}(${stringifyObject(obj[key])}),`;
 			} else {
-				result += `${key}|${obj[key]
+				result += `${key}:${obj[key]
 					.toString()
-					.replace(/([\\\(\)|])/g, '\\$1')},`;
+					.replace(/([\\\(\):])/g, '\\$1')},`;
 			}
 		}
 		return result.slice(0, -1); // Remove trailing comma
@@ -16,8 +16,8 @@ function stringifyCompactConfig(configObject) {
 	return stringifyObject(configObject);
 }
 const regexes = {
-  value: /^(?<key>[^|\)\()]+)\|(?<value>[^\),]+)\,/,
-  object: /^(?<key>[^|]+)\((?<object>[^\)]+|[^\)]+\))\),/
+  value: /^(?<key>[^:\)\()]+)\|(?<value>[^\),]+)\,/,
+  object: /^(?<key>[^:]+)\((?<object>[^\)]+|[^\)]+\))\),/
 }
 function parseCompactConfig(string) {
   var result = {};
