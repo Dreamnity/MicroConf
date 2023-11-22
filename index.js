@@ -63,7 +63,6 @@ module.exports = {
   parse: parseCompactConfig,
   stringify: stringifyCompactConfig
 }
-console.log(parseCompactConfig('result:{author\:5UP3R_D1N},options(headers:(Content-Type:application/json))'))
 /*
 const configObject = {
   server: {
