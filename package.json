@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.9.4"
+  },
+  "dependencies": {
+    "bun-types": "^1.0.14"
   }
 }
