@@ -17,7 +17,7 @@ function stringifyCompactConfig(configObject) {
 }
 const regexes = {
   value: /^(?<key>[^:\)\()]+)\:(?<value>[^\),]+)\,/,
-  object: /(?<key>[^:]*?)\((?<object>[^\)]+|[^\)]+\))\),/
+  object: /^(?<key>[^:]*?)\((?<object>[^\)]+|[^\)]+\))\),/
 }
 function parseCompactConfig(string,debug) {
   var result = {};
@@ -35,7 +35,7 @@ function parseCompactConfig(string,debug) {
       count++;
       if(debug) console.log('++Value',match[0])
       //console.log(match);
-      let value = match.groups.value.replace(/ESCAPED{([a-zA-Z0-8]{1,8})}/g, (a, b) => '\\' + Buffer.from(b, 'hex').toString());
+      let value = match.groups.value.replace(/ESCAPED{([a-zA-Z0-8]{1,8})}/g, (a, b) => Buffer.from(b, 'hex').toString());
       try {
         result[match.groups.key] = JSON.parse(value);
       } catch {
@@ -63,23 +63,3 @@ module.exports = {
   parse: parseCompactConfig,
   stringify: stringifyCompactConfig
 }
-/*
-const configObject = {
-  server: {
-    port: 8080,
-    host: 'localhost',
-    database: {
-      url: 'mongodb://localhost:27017|',
-      name: 'myDatabase',
-    },
-  },
-  logging: {
-    level: 'info',
-    file: 'logs/app.log',
-  },
-};
-const compactConfigString = stringifyCompactConfig(configObject);
-const parsed = parseCompactConfig(compactConfigString);
-console.log(compactConfigString);
-console.log(parsed);
-//*/
